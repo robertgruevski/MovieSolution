@@ -13,6 +13,7 @@ namespace MovieProject.Models
 		[Required(ErrorMessage = "Please enter a rating")]
 		[Range(1, 5, ErrorMessage = "Rating must be between 1 and 5")]
 		public int? Rating { get; set; }
+		public string Slug => Name?.Replace(' ', '-').ToLower() + '-' + Year?.ToString(); // Read only property for the slug
 		[Required(ErrorMessage = "Please enter a genre")]
 		public string GenreId { get; set; } = string.Empty; // Foreign Key Property
 		[ValidateNever]
