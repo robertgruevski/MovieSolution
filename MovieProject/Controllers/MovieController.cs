@@ -10,7 +10,19 @@ namespace MovieProject.Controllers
 		{
 			Context = ctx;
 		}
-
+		[HttpGet]
+		public IActionResult Delete(int id)
+		{
+			var movie = Context.Movies.Find(id);
+			return View(movie);
+		}
+		[HttpPost]
+		public IActionResult Delete(Movie movie)
+		{
+			Context.Movies.Remove(movie);
+			Context.SaveChanges();
+			return RedirectToAction("Index", "Home");
+		}
 		[HttpGet]
 		public IActionResult Add()
 		{
@@ -34,12 +46,12 @@ namespace MovieProject.Controllers
 				{
 					Context.Movies.Add(movie);
 				}
+				else
+				{
+					Context.Movies.Update(movie);
+				}
 				Context.SaveChanges();
 				return RedirectToAction("Index", "Home");
-				//else
-				//{
-				//	Context.Movies.Update(movie);
-				//}
 			}
 			else
 			{
