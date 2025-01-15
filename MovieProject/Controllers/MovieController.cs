@@ -17,6 +17,13 @@ namespace MovieProject.Controllers
 			ViewBag.Action = "Add New Movie";
 			return View("Edit", new Movie());
 		}
+		[HttpGet]
+		public IActionResult Edit(int id)
+		{
+			ViewBag.Action = "Edit Movie";
+			var movie = Context.Movies.Find(id); // LINQ Query to find the movie with the given id - Primary Key search
+			return View(movie);
+		}
 		[HttpPost]
 		public IActionResult Edit(Movie movie)
 		{
