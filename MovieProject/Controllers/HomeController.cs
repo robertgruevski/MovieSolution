@@ -6,27 +6,15 @@ namespace MovieProject.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private MovieContext context { get; set; }
+        public HomeController(MovieContext ctx) // Constructor accepts DB Context object that's enabled by DI
         {
-            _logger = logger;
+            this.context = ctx;
         }
-
         public IActionResult Index()
         {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var movies = context.Movies.OrderBy(m => m.Name).ToList();
+            return View(movies);
         }
     }
 }
